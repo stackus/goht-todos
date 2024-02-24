@@ -1,0 +1,14 @@
+package pages
+
+import (
+	"github.com/stackus/goht-todos/domain"
+	"github.com/stackus/goht-todos/templates/partials"
+	"github.com/stackus/goht-todos/templates/shared"
+)
+
+@goht TodosPage(todos []domain.Todo, term string) {
+=@render shared.Page("Home")
+	=@render partials.Search(term)
+	=@render partials.RenderTodos(todos)
+	=@render partials.AddTodoForm()
+}

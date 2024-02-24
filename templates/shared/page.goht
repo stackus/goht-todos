@@ -1,0 +1,23 @@
+package shared
+
+@goht Page(title string) {
+!!!
+%html.h-full{lang: "en"}
+	%head
+		%meta{charset: "UTF-8"}
+		%title= title
+		%link{rel: "icon", type: "image/svg+xml", href: "/dist/favicon.svg"}
+		%meta{content: "width=device-width, initial-scale=1", name: "viewport"}
+		%meta{content: "index, follow", name: "robots"}
+		%meta{content: "7 days", name: "revisit-after"}
+		%meta{content: "English", name: "language"}
+		%script{src: "https://unpkg.com/htmx.org@1.9.10", integrity: "sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC", crossorigin: "anonymous"}
+		%script{src: "https://unpkg.com/hyperscript.org@0.9.12"}
+		%script{src: "https://unpkg.com/sortablejs@1.15.0"}
+		%script{src: "/dist/app.js"}
+		%link{rel: "stylesheet", href: "/dist/styles.css"}
+	%body.h-full.bg-yellow-50.font-mono
+		%section.max-w-lg.mx-auto.my-2
+			%h1.text-8xl.font-black.text-center.m-0.pb-2 Todos
+			=@children
+}

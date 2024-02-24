@@ -1,0 +1,52 @@
+package partials
+
+import (
+	"github.com/stackus/goht-todos/domain"
+)
+
+// If is a helper function to conditionally return a value
+// TODO: replace with goht.If when it's available
+func If(condition bool, trueVal, falseVal string) string {
+	if condition {
+		return trueVal
+	}
+	return falseVal
+}
+
+@goht RenderTodo(todo domain.Todo) {
+.block.py-2.border-b-4.border-dotted.border-red-900.draggable.flex.items-center
+	%span.handle
+		<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="10" y="12" width="20" height="3" fill="currentColor"/>
+			<rect x="10" y="18.5" width="20" height="3" fill="currentColor"/>
+			<rect x="10" y="25" width="20" height="3" fill="currentColor"/>
+		</svg>
+	%form{ method: "POST", action: #{"/todos/"+todo.ID+"/delete"} }
+		%button.focus:outline.focus:outline-red-500.focus:outline-4.mr-2.mt-2{
+			type: "submit",
+			hx-target: "closest div",
+			hx-swap: "outerHTML",
+			hx-delete: #{"/todos/"+todo.ID},
+		} ❌
+	%form{ method: "GET", action: #{"/todos/"+todo.ID} }
+		%button.focus:outline.focus:outline-red-500.focus:outline-4.mr-2.mt-2{
+			type: "submit",
+			hx-target: "closest div",
+			hx-swap: "outerHTML",
+			hx-get: #{"/todos/"+todo.ID},
+		} 📝
+	- formClasses := map[string]bool{"inline": true, "line-through": todo.Completed}
+	%form.mt-2{
+		method: "POST",
+		action: #{"/todos/"+todo.ID+"/edit"},
+		class: #{formClasses},
+		hx-target:"closest div",
+		hx-swap:"outerHTML",
+	}
+		%input{ type: "hidden", name: "completed", value: #{%t !todo.Completed}}
+		%input{ type: "hidden", name: "description", value: #{todo.Description} }
+		%noscript
+			%input.mr-2{ type: "submit", value: #{If(todo.Completed, "Set as Not Completed", "Set as Completed")} }
+		%span{ "hx-patch": #{"/todos/"+todo.ID} }= todo.Description
+	%input{ type: "hidden", name: "id", value: #{todo.ID} }
+}

@@ -1,0 +1,17 @@
+package partials
+
+@goht Search(term string) {
+%form.inline{method:"GET", action:"/todos", class:"[&:has(+ul:empty)]:hidden"}
+	%label.flex.items-center
+		%span.text-lg.font-bold Search
+		%input#search.ml-2.grow{
+			name: "search",
+			value: #{term},
+			type: "text",
+			placeholder: "Begin typing to search...",
+			hx-get: "/todos",
+			hx-target: "#todos",
+			hx-trigger: "keyup changed, search",
+			hx-replace: "innerHTML",
+		}
+}

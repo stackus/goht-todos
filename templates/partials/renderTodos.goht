@@ -1,0 +1,14 @@
+package partials
+
+import (
+	"github.com/stackus/goht-todos/domain"
+)
+
+@goht RenderTodos(todos []domain.Todo) {
+%form.block.p-0.mb-2.text-lg{hx-post: "/todos/sort", hx-trigger: "end"}
+	#todos.sortable
+		- for _, todo := range todos
+			=@render RenderTodo(todo)
+		#no-todos.hidden.first:block.first:pb-2.first:pt-3
+			%p Congrats, you have no todos! Or... do you? 😰
+}

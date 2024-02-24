@@ -1,0 +1,28 @@
+package partials
+
+import (
+	"github.com/stackus/goht-todos/domain"
+)
+
+@goht EditTodoForm(todo domain.Todo) {
+.block.py-2.border-b-4.border-dotted.border-red-900.draggable.flex.items-center
+	%span.handle
+		<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect x="10" y="12" width="20" height="3" fill="currentColor"/>
+			<rect x="10" y="18.5" width="20" height="3" fill="currentColor"/>
+			<rect x="10" y="25" width="20" height="3" fill="currentColor"/>
+		</svg>
+	%button.mr-2.mt-2{disabled} ❌
+	%button.mr-2.mt-2{disabled} 📝
+	%input{type:"hidden", name:"id", value:#{todo.ID}}
+	%form.inline{
+		method:"POST",
+		action:#{"/todos/"+todo.ID+"/edit"},
+		hx-target:"closest div",
+		hx-swap:"outerHTML",
+		hx-patch:#{"/todos/"+todo.ID},
+	}
+		%input{type:"hidden", name:"completed", value:#{%t todo.Completed}}
+		%input{type:"text", name:"description", value:#{todo.Description}}
+		%input.hidden{type:"submit"}
+}

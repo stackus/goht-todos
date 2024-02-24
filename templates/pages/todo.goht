@@ -1,0 +1,12 @@
+package pages
+
+import (
+	"github.com/stackus/goht-todos/domain"
+	"github.com/stackus/goht-todos/templates/partials"
+	"github.com/stackus/goht-todos/templates/shared"
+)
+
+@goht TodoPage(todo domain.Todo) {
+=@render shared.Page("Todo")
+	=@render partials.EditTodoForm(todo)
+}

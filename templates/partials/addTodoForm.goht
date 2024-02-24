@@ -1,0 +1,18 @@
+package partials
+
+@goht AddTodoForm() {
+%form.inline{
+	method: "POST",
+	action: "/todos",
+	hx-post: "/todos",
+	hx-target: "#no-todos",
+	hx-swap: "beforebegin",
+}
+	%label.flex.items-center
+		%span.text-lg.font-bold Add Todo
+		%input.ml-2.grow{
+			type: "text",
+			name: "description",
+			_: "on keyup if the event's key is 'Enter' set my value to '' trigger keyup"
+		}
+}
